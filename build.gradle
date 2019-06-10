@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'io.qameta.allure' version '2.8.0'
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'io.qameta.allure'
+
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
+
+group = 'ua.barnacle'
+version = '1.0.0'
+archivesBaseName = 'yahoo-ui-tests'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'org.testng:testng:6.14.3'
+    compile 'com.google.guava:guava:27.1-jre'
+    compile 'org.seleniumhq.selenium:selenium-api:3.141.59'
+    compile 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    compile 'org.seleniumhq.selenium:selenium-support:3.141.59'
+    testRuntime 'io.qameta.allure:allure-gradle:2.5'
+    compile 'io.qameta.allure:allure-java-commons:2.12.1'
+
+}
+
+allure {
+    version = '2.12.1'
+    autoconfigure = true
+    aspectjweaver = true
+    allureJavaVersion = '2.12.1'
+}
+
+mainClassName = 'ua.barnacle.App'
+
+test {
+    systemProperties System.getProperties()
+
+    def suiteDir = "src/test/resources/test-suites"
+    def testSuite = project.hasProperty("suite") ? project.property("suite") : "default.xml"
+    def suitePath = "$suiteDir/$testSuite"
+
+    useTestNG()
+    options.suites(suitePath)
+}

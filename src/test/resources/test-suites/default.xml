@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="yahoo-ui-test" verbose="1" configfailurepolicy="continue" time-out="300000">
+    <test name="yahoo-ui-test" preserve-order="true">
+        <packages>
+            <package name="ua.barnacle.tests.*"/>
+        </packages>
+    </test>
+</suite>
